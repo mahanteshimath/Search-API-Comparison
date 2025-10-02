@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Search API Comparison Tool - All 19 Providers vs Perplexity</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Complete Search API Comparison Tool</h1>
+            <p class="subtitle">All 19 Providers Benchmarked Against Perplexity's Search API</p>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Overview Stats -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 class="stat-number" id="totalProviders">19</h3>
+                        <p class="stat-label">Total Providers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 class="stat-number" id="priceRange">$0.30 - $35.00</h3>
+                        <p class="stat-label">Price Range per 1K</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 class="stat-number" id="cheaperCount">7</h3>
+                        <p class="stat-label">Cheaper than Perplexity</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 class="stat-number" id="marketSegments">6</h3>
+                        <p class="stat-label">Market Segments</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced Filter Section -->
+            <section class="filter-section">
+                <div class="filter-controls">
+                    <div class="search-filter-group">
+                        <div class="search-box">
+                            <input type="text" id="searchInput" placeholder="Search providers..." class="form-control">
+                        </div>
+                        <select id="statusFilter" class="form-control">
+                            <option value="all">All Status</option>
+                            <option value="active">Active Only</option>
+                            <option value="deprecated">Deprecated</option>
+                        </select>
+                        <select id="apiTypeFilter" class="form-control">
+                            <option value="all">All API Types</option>
+                            <option value="Search API">Search API</option>
+                            <option value="SERP API">SERP API</option>
+                            <option value="AI Search">AI Search</option>
+                            <option value="Web Scraping">Web Scraping</option>
+                            <option value="Custom Search">Custom Search</option>
+                            <option value="AI Grounding">AI Grounding</option>
+                        </select>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn btn--secondary filter-btn active" data-filter="all">All Providers</button>
+                        <button class="btn btn--secondary filter-btn" data-filter="budget">Budget &lt;$3</button>
+                        <button class="btn btn--secondary filter-btn" data-filter="mid-tier">Mid-tier $3-8</button>
+                        <button class="btn btn--secondary filter-btn" data-filter="premium">Premium $8-15</button>
+                        <button class="btn btn--secondary filter-btn" data-filter="enterprise">Enterprise &gt;$15</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comprehensive Comparison Table -->
+            <section class="table-section">
+                <div class="table-header">
+                    <h2>Comprehensive Provider Comparison</h2>
+                    <p class="table-description">Click any provider to see detailed comparison with Perplexity. Perplexity is highlighted in blue.</p>
+                </div>
+                <div class="table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="name">Provider Name</th>
+                                <th class="sortable" data-sort="pricePerK">Price per 1K</th>
+                                <th class="sortable" data-sort="freeTier">Free Tier</th>
+                                <th class="sortable" data-sort="apiType">API Type</th>
+                                <th class="sortable" data-sort="responseTime">Response Time</th>
+                                <th class="sortable" data-sort="status">Status</th>
+                                <th>Key Features</th>
+                            </tr>
+                        </thead>
+                        <tbody id="providersTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Enhanced Visual Charts Section -->
+            <section class="charts-section">
+                <h2>Market Analysis & Visual Insights</h2>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Price Comparison - All 19 Providers</h3>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <canvas id="priceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Price vs Free Tier Offerings</h3>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <canvas id="freeTierChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Market Segmentation</h3>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <canvas id="segmentChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>API Type Distribution</h3>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <canvas id="apiTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced Recommendation Engine -->
+            <section class="recommendation-section">
+                <h2>Enhanced Recommendation Engine</h2>
+                <p class="section-description">Answer a few questions to get personalized recommendations from our database of 19 search APIs</p>
+                <div class="recommendation-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Primary use case</label>
+                            <select id="useCase" class="form-control">
+                                <option value="">Select use case</option>
+                                <option value="budget">Budget-conscious project</option>
+                                <option value="enterprise">Enterprise application</option>
+                                <option value="ai">AI/LLM integration</option>
+                                <option value="research">Research and analysis</option>
+                                <option value="privacy">Privacy-focused</option>
+                                <option value="speed">Speed-critical applications</option>
+                                <option value="multi-format">Multi-format search</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Expected monthly volume</label>
+                            <select id="volume" class="form-control">
+                                <option value="">Select volume</option>
+                                <option value="low">Under 10K/month</option>
+                                <option value="medium">10K - 100K/month</option>
+                                <option value="high">100K - 1M/month</option>
+                                <option value="enterprise">Over 1M/month</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Budget preference</label>
+                            <select id="budget" class="form-control">
+                                <option value="">Select budget</option>
+                                <option value="budget">Budget (&lt;$3/1K)</option>
+                                <option value="mid">Mid-range ($3-8/1K)</option>
+                                <option value="premium">Premium ($8-15/1K)</option>
+                                <option value="enterprise">Enterprise (&gt;$15/1K)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Technical requirements</label>
+                            <select id="technical" class="form-control">
+                                <option value="">Select requirement</option>
+                                <option value="simple">Simple API integration</option>
+                                <option value="advanced">Advanced filtering needed</option>
+                                <option value="proxy">Proxy support required</option>
+                                <option value="realtime">Real-time results</option>
+                                <option value="semantic">Semantic search capabilities</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn--primary btn--lg" id="getRecommendations">Get Top 5 Recommendations</button>
+                </div>
+                <div id="recommendationsResult" class="recommendations-result hidden">
+                    <h3>Top 5 Recommended Alternatives to Perplexity</h3>
+                    <div id="recommendationsList"></div>
+                </div>
+            </section>
+
+            <!-- Market Analysis Section -->
+            <section class="market-analysis-section">
+                <h2>Market Trends & Analysis</h2>
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <h3>Price Tier Breakdown</h3>
+                        <div class="tier-stats">
+                            <div class="tier-item">
+                                <span class="tier-label">Budget (&lt;$3)</span>
+                                <span class="tier-count">4 providers</span>
+                                <span class="tier-percentage">21%</span>
+                            </div>
+                            <div class="tier-item">
+                                <span class="tier-label">Mid-tier ($3-8)</span>
+                                <span class="tier-count">8 providers</span>
+                                <span class="tier-percentage">42%</span>
+                            </div>
+                            <div class="tier-item">
+                                <span class="tier-label">Premium ($8-15)</span>
+                                <span class="tier-count">4 providers</span>
+                                <span class="tier-percentage">21%</span>
+                            </div>
+                            <div class="tier-item">
+                                <span class="tier-label">Enterprise (&gt;$15)</span>
+                                <span class="tier-count">3 providers</span>
+                                <span class="tier-percentage">16%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analysis-card">
+                        <h3>Free Tier Analysis</h3>
+                        <div class="free-tier-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">11</span>
+                                <span class="stat-label">Providers with free tiers</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">58%</span>
+                                <span class="stat-label">Market coverage</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">2K</span>
+                                <span class="stat-label">Average monthly limit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Enhanced Detailed Comparison Modal -->
+    <div id="comparisonModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Provider Comparison</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="comparison-grid">
+                    <div class="provider-comparison">
+                        <div class="provider-card">
+                            <h3 id="selectedProviderName">Selected Provider</h3>
+                            <div class="provider-details" id="selectedProviderDetails"></div>
+                            <div class="cost-analysis" id="selectedProviderCost"></div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="provider-card baseline">
+                            <h3>Perplexity Search API</h3>
+                            <div class="provider-details" id="perplexityDetails"></div>
+                            <div class="cost-analysis">
+                                <div class="cost-item"><strong>Reference Price:</strong> $5.00/1K</div>
+                                <div class="cost-item"><strong>Market Position:</strong> Baseline</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pros-cons-section">
+                        <div class="pros-column">
+                            <h4>Advantages vs Perplexity</h4>
+                            <ul id="prosList"></ul>
+                        </div>
+                        <div class="cons-column">
+                            <h4>Disadvantages vs Perplexity</h4>
+                            <ul id="consList"></ul>
+                        </div>
+                    </div>
+                    <div class="feature-comparison" id="featureComparison">
+                        <h4>Feature Comparison Matrix</h4>
+                        <div class="features-grid" id="featuresGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
